@@ -1,4 +1,4 @@
-#include "DS.h"
+#include "DS_2.h"
 
 static void swim(Heap *p, int k);
 static void sink(Heap *p, int k);
@@ -19,13 +19,6 @@ void insert(Heap *p, const Msg x)
     }
 }
 
-
-
-
-
-
-
-
 static void swim(Heap *p, int k)
 {
     while (k > 1 && less(&p->h_arr[k], &p->h_arr[k / 2])) {
@@ -40,9 +33,11 @@ static void sink(Heap *p, int k)
 {
     while (2 * k <= h_len) {
         int j = 2 * k;
+        // Баруун хүүхэд нь зүүн хүүхдээсээ бага (priority эсвэл time-аар) байвал баруун руу шилжих
         if (j < h_len && less(&p->h_arr[j + 1], &p->h_arr[j])) {
             j++;
         }
+        // Эцэг элемент хүүхдүүдээсээ бага буюу тэнцүү бол зогсоно
         if (!less(&p->h_arr[j], &p->h_arr[k])) {
             break;
         }
