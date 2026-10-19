@@ -13,7 +13,7 @@ int less(const Msg *a, const Msg *b)
 
 void insert(Heap *p, const Msg x)
 {
-    if (h_len <= 100000) {
+    if (h_len < 100000) {
         p->h_arr[h_len++] = x;
         swim(p, h_len);
     }
