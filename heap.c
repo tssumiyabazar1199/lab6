@@ -19,6 +19,13 @@ void insert(Heap *p, const Msg x)
     }
 }
 
+
+
+
+
+
+
+
 static void swim(Heap *p, int k)
 {
     while (k > 1 && less(&p->h_arr[k], &p->h_arr[k / 2])) {
