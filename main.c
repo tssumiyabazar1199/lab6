@@ -1,31 +1,30 @@
-#include "DS.h"
 #include <stdio.h>
+#include <string.h>
+#include "DS_2.h"
 
-// Том санах ой эзлэх хувьсагчийг функцыг дотор заралах нь
-// стакын хэмжээг дүүргэдэг. Заримдаа багтдаггүй тул
-// глобалаар зарлав.
-Heap hp;        // Heap бүтэц 100000 x sizeof(Msg) хэмжээ эзлэнэ
+int main() {
+    int n;
+    if (scanf("%d", &n) != 1) return 0;
 
-int main()
-{
-        int n, i;
-        scanf("%d", &n);
-        char cmd[5];
-        Msg x;
+    Heap hp;
+    hp.heap.len = 0; // Эсвэл h_len = 0;
+    
+    int time_counter = 0;
 
-        for (i = 0; i < n; i++) {
-                scanf("%s", cmd);
-                if (strcmp(cmd, "PUT") == 0) {
-                        // PUT командаар heap-д оруулна
-                        scanf("%s%d", x.text, &x.priority);
-                        x.time = i;
-                        insert(&hp, x);
-                } else if (strcmp(cmd, "GET") == 0) {
-                        // GET командаар heap-ээс гаргана
-                        x = delMin(&hp);
-                        printf("%s\n", x.text);
-                }
+    for (int i = 0; i < n; i++) {
+        char cmd[10];
+        scanf("%s", cmd);
+
+        if (strcmp(cmd, "PUT") == 0) {
+            Msg m;
+            scanf("%s %d", m.text, &m.priority);
+            m.time = ++time_counter; // Орсон дарааллыг хадгалах хугацаа
+            insert(&hp, m);
+        } else if (strcmp(cmd, "GET") == 0) {
+            Msg m = delMin(&hp);
+            printf("%s\n", m.text);
         }
-        
-        return 0;  // EXIT 0 амжилттай дууслаа
+    }
+
+    return 0;
 }
