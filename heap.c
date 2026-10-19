@@ -1,8 +1,6 @@
 #include "DS_2.h"
 
-static void swim(Heap *p, int k);
-static void sink(Heap *p, int k);
-
+// 1. Shaqada min-heap (less): Waxay hubisaa priority iyo time
 int less(const Msg *a, const Msg *b)
 {
     if (a->priority != b->priority) {
@@ -11,14 +9,7 @@ int less(const Msg *a, const Msg *b)
     return a->time < b->time;
 }
 
-void insert(Heap *p, const Msg x)
-{
-    if (h_len < 100000) {
-        p->h_arr[++h_len] = x;
-        swim(p, h_len);
-    }
-}
-
+// 2. Shaqada swim
 static void swim(Heap *p, int k)
 {
     while (k > 1 && less(&p->h_arr[k], &p->h_arr[k / 2])) {
@@ -29,15 +20,14 @@ static void swim(Heap *p, int k)
     }
 }
 
+// 3. Shaqada sink
 static void sink(Heap *p, int k)
 {
-    while (2 * k <= h_len) {
+    while (2 * k <= p->h_len) {
         int j = 2 * k;
-        // Баруун хүүхэд нь зүүн хүүхдээсээ бага (priority эсвэл time-аар) байвал баруун руу шилжих
-        if (j < h_len && less(&p->h_arr[j + 1], &p->h_arr[j])) {
+        if (j < p->h_len && less(&p->h_arr[j + 1], &p->h_arr[j])) {
             j++;
         }
-        // Эцэг элемент хүүхдүүдээсээ бага буюу тэнцүү бол зогсоно
         if (!less(&p->h_arr[j], &p->h_arr[k])) {
             break;
         }
@@ -48,11 +38,22 @@ static void sink(Heap *p, int k)
     }
 }
 
+// 4. Shaqada insert
+void insert(Heap *p, const Msg x)
+{
+    if (p->h_len < 100000) {
+        p->h_len++;
+        p->h_arr[p->h_len] = x;
+        swim(p, p->h_len);
+    }
+}
+
+// 5. Shaqada delMin
 Msg delMin(Heap *p)
 {
     Msg minVal = p->h_arr[1];
-    p->h_arr[1] = p->h_arr[h_len];
-    h_len--;
+    p->h_arr[1] = p->h_arr[p->h_len];
+    p->h_len--;
     sink(p, 1);
     return minVal;
 }
