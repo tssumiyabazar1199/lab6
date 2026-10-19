@@ -48,8 +48,9 @@ static void sink(Heap *p, int k)
 
 Msg delMin(Heap *p)
 {
-    Msg minVal = p->h_arr[0];
+    Msg minVal = p->h_arr[1];
     p->h_arr[1] = p->h_arr[h_len];
+    h_len--;
     sink(p, 1);
     return minVal;
 }
