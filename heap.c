@@ -1,7 +1,7 @@
 #include "DS.h"
 
-static void swim(Heap *p, int);
-static void sink(Heap *p, int);
+static void swim(Heap *p, int k);
+static void sink(Heap *p, int k);
 
 int less(const Msg *a, const Msg *b)
 {
