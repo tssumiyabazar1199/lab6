@@ -6,7 +6,7 @@ static void sink(Heap *p, int k);
 int less(const Msg *a, const Msg *b)
 {
         if (a->priority != b->priority) {
-                return a->priority > b->priority;
+                return a->priority < b->priority;
         }
         return a->time < b->time;
 }
@@ -15,13 +15,13 @@ void insert(Heap *p, const Msg x)
 {
         if (p->h_len >= 100000) return;
         
-        p->h_arr[p->h_len++] = x;
+        p->h_arr[++p->h_len] = x;
         swim(p, p->h_len);
 }
 
 static void swim(Heap *p, int k)
 {
-        while (k > 0 && less(&p->h_arr[k], &p->h_arr[k / 2])) {
+        while (k > 1 && less(&p->h_arr[k], &p->h_arr[k / 2])) {
                 Msg temp = p->h_arr[k];
                 p->h_arr[k] = p->h_arr[k / 2];
                 p->h_arr[k / 2] = temp;
