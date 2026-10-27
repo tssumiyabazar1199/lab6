@@ -33,7 +33,7 @@ static void sink(Heap *p, int k)
 {
         while (2 * k <= p->h_len) {
                 int j = 2 * k;
-                if (j < p->h_len && less(&p->h_arr[j], &p->h_arr[j + 1])) {
+                if (j < p->h_len && less(&p->h_arr[j + 1], &p->h_arr[j])) {
                         j++;
                 }
                 if (!less(&p->h_arr[j], &p->h_arr[k])) {
@@ -48,6 +48,10 @@ static void sink(Heap *p, int k)
 
 Msg delMin(Heap *p)
 {
+        if (p->h_len <= 0) {
+                Msg empty = {0};
+                return empty;
+        }
         Msg min = p->h_arr[1];
         p->h_arr[1] = p->h_arr[p->h_len--];
         sink(p, 1);
